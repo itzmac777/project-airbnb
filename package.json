@@ -1,0 +1,25 @@
+{
+  "name": "airbnb-clone-v2",
+  "version": "1.0.0",
+  "description": "This is a demo project of airbnb",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itzmac777/project-airbnb.git"
+  },
+  "author": "mac777",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/itzmac777/project-airbnb/issues"
+  },
+  "homepage": "https://github.com/itzmac777/project-airbnb#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.2",
+    "path": "^0.12.7"
+  }
+}
