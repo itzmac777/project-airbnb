@@ -22,6 +22,7 @@ main()
 // ==== NPM MODULES ====
 const path = require("path");
 const ejs = require("ejs");
+const methodOverride = require("method-override");
 
 // ==== LOCAL MODULES ====
 const Listing = require("./models/listing.js");
@@ -30,24 +31,90 @@ const Listing = require("./models/listing.js");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(methodOverride("_method"));
 
-// ==== ROUTES ====
+// ==== LISTING ROUTES ====
 app.get("/", (req, res) => {
-  Listing.insertMany([
-    {
-      title: "test001",
-      description: "This is a simple desc",
-      price: 10,
-      image: "f",
-      location: "Sylhet",
-      country: "Bangladesh",
-    },
-  ])
+  res.send("This is root");
+});
+
+// INDEX ROUTE
+app.get("/listings", (req, res) => {
+  Listing.find()
     .then((data) => {
-      console.log(data);
+      res.render("listings/index.ejs", { data });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+});
+
+//CREATE ROUTE
+app.get("/listings/new", (req, res) => {
+  res.render("listings/create.ejs");
+});
+
+app.post("/listings", (req, res) => {
+  const { listing } = req.body;
+  if (listing) {
+    Listing.insertMany([listing])
+      .then((data) => {
+        res.redirect("/listings");
+      })
+      .catch((err) => {
+        console.log("Some error occured, input valid data");
+      });
+  }
+});
+
+//READ ROUTE
+app.get("/listings/:id", (req, res) => {
+  const { id } = req.params;
+  Listing.findById(id)
+    .then((data) => {
+      res.render("listings/show.ejs", { data });
+    })
+    .catch((err) => {
+      console.log("Data not found");
+    });
+});
+
+//UPDATE ROUTE
+app.get("/listings/:id/edit", (req, res) => {
+  const { id } = req.params;
+  Listing.findById(id)
+    .then((data) => {
+      res.render("listings/edit.ejs", { data });
+    })
+    .catch((err) => {
+      console.log("Data not found");
+    });
+});
+
+app.patch("/listings/:id", (req, res) => {
+  const { id } = req.params;
+  const { edited } = req.body;
+  if (edited) {
+    Listing.findByIdAndUpdate(id, edited)
+      .then((data) => {
+        res.redirect(`/listings/${id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+});
+
+//DELETE ROUTE
+app.delete("/listings/:id", (req, res) => {
+  const { id } = req.params;
+  Listing.findByIdAndDelete(id)
+    .then((data) => {
+      res.redirect("/listings");
     })
     .catch((err) => {
       console.log(err);
     });
-  res.send("This is root");
 });

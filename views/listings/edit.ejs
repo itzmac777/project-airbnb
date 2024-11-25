@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AirBnb</title>
+  </head>
+  <body>
+    <form method="POST" action="/listings/<%= data.id %>?_method=PATCH">
+      <input
+        type="text"
+        name="edited[title]"
+        placeholder="title"
+        value="<%= data.title %>"
+        required
+      /><br />
+      <input
+        type="text"
+        name="edited[description]"
+        placeholder="description"
+        value="<%= data.description %>"
+        required
+      /><br />
+      <input
+        type="text"
+        name="edited[image]"
+        placeholder="image link"
+        value="<%= data.image %>"
+      /><br />
+      <input
+        type="number"
+        name="edited[price]"
+        placeholder="price"
+        value="<%= data.price %>"
+        required
+      /><br />
+      <input
+        type="text"
+        name="edited[location]"
+        placeholder="location"
+        value="<%= data.location %>"
+        required
+      /><br />
+      <input
+        type="text"
+        name="edited[country]"
+        placeholder="country"
+        value="<%= data.country %>"
+        required
+      /><br />
+      <button>Save</button>
+    </form>
+  </body>
+</html>
