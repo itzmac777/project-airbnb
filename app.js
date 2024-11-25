@@ -22,6 +22,7 @@ main()
 // ==== NPM MODULES ====
 const path = require("path");
 const ejs = require("ejs");
+const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 
 // ==== LOCAL MODULES ====
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
+app.engine("ejs", ejsMate);
 
 // ==== LISTING ROUTES ====
 app.get("/", (req, res) => {
@@ -95,9 +97,9 @@ app.get("/listings/:id/edit", (req, res) => {
 
 app.patch("/listings/:id", (req, res) => {
   const { id } = req.params;
-  const { edited } = req.body;
-  if (edited) {
-    Listing.findByIdAndUpdate(id, edited)
+  const { data } = req.body;
+  if (data) {
+    Listing.findByIdAndUpdate(id, data)
       .then((data) => {
         res.redirect(`/listings/${id}`);
       })

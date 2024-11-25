@@ -1,0 +1,102 @@
+.edit-listing {
+  padding: 3em 5em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.large-middle-text,
+.large-middle-text-black {
+  font-size: 2.7rem;
+  font-weight: 600;
+  color: #ff385c;
+}
+
+.large-middle-text-black {
+  color: #222222;
+}
+
+.edit-listing-form {
+  margin-top: 3rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.edit-listing-form input,
+.edit-listing-form textarea {
+  width: 60vw;
+  background-color: white;
+  border: 1.5px solid rgb(204, 203, 203);
+  padding: 0.7em 1em;
+  border-radius: 0.5em;
+  margin-bottom: 0.5rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.edit-listing-form textarea {
+  width: 60vw;
+  height: 5em;
+  resize: none;
+}
+
+.edit-listing-form-pair {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.4em;
+  margin-bottom: 0.5em;
+}
+
+.edit-listing-form-pair label {
+  letter-spacing: 0.2em;
+}
+
+.edit-listing-form input::placeholder,
+.edit-listing-form textarea::placeholder {
+  color: #22222285;
+}
+
+.edit-listing-form button {
+  background-color: #ff385c;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  border-radius: 0.5em;
+}
+
+.nav-icon-your-home {
+  display: none;
+}
+
+.nav-option {
+  display: none;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (min-width: 700px) {
+  .edit-listing-form-collapse {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    max-width: 60vw;
+    column-gap: 3em;
+  }
+
+  .edit-listing-form-collapse input {
+    width: 100%;
+  }
+}
+
+.warning {
+  font-size: 0.9em;
+  font-weight: 500;
+  color: #ff385dbe;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  bottom: 0.5em;
+  display: none;
+}

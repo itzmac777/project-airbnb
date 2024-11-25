@@ -1,16 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AirBnb</title>
-  </head>
-  <body>
-    <%= data.title %>
-    <br /><br />
-    <a href="/listings/<%= data.id %>/edit">Edit</a>
+<% layout("layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/css/show.css" />
+<div class="show-card-container">
+  <div class="show-card-container-title"><%= data.title %></div>
+  <div class="show-card-container-image">
+    <img src="<%= data.image %>" alt="" />
+  </div>
+  <div class="show-card-container-info">
+    <div class="show-card-container-info-desc">
+      <div class="show-card-container-desc"><%= data.description %></div>
+      <div class="show-card-container-location">
+        <%= data.location %> <%= data.country %>
+      </div>
+    </div>
+    <div class="show-card-container-info-card">
+      <div class="show-card-container-info-price">
+        &#2547;<%= data.price.toLocaleString("en-BD") %> / Night
+      </div>
+      <div class="book-btn">Book Now</div>
+    </div>
+  </div>
+  <div class="delete-listing-btn">
     <form method="POST" action="/listings/<%= data.id %>?_method=DELETE">
       <button>Delete</button>
     </form>
-  </body>
-</html>
+    <a href="/listings/<%= data.id %>/edit">Edit</a>
+  </div>
+</div>

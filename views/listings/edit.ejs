@@ -1,54 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AirBnb</title>
-  </head>
-  <body>
+<!-- <% layout('layouts/boilerplate') -%>
+<body>
+  <form method="POST" action="/listings/<%= data.id %>?_method=PATCH">
+    <input
+      type="text"
+      name="edited[title]"
+      placeholder="title"
+      value="<%= data.title %>"
+      required
+    /><br />
+    <input
+      type="text"
+      name="edited[description]"
+      placeholder="description"
+      value="<%= data.description %>"
+      required
+    /><br />
+    <input
+      type="text"
+      name="edited[image]"
+      placeholder="image link"
+      value="<%= data.image %>"
+    /><br />
+    <input
+      type="number"
+      name="edited[price]"
+      placeholder="price"
+      value="<%= data.price %>"
+      required
+    /><br />
+    <input
+      type="text"
+      name="edited[location]"
+      placeholder="location"
+      value="<%= data.location %>"
+      required
+    /><br />
+    <input
+      type="text"
+      name="edited[country]"
+      placeholder="country"
+      value="<%= data.country %>"
+      required
+    /><br />
+    <button>Save</button>
+  </form>
+</body> -->
+<% layout("layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/css/edit.css" />
+<div class="edit-listing">
+  <div class="large-middle-text">Airbnb it.</div>
+  <div class="large-middle-text-black">Edit your listing</div>
+  <div class="edit-listing-form">
     <form method="POST" action="/listings/<%= data.id %>?_method=PATCH">
-      <input
-        type="text"
-        name="edited[title]"
-        placeholder="title"
-        value="<%= data.title %>"
-        required
-      /><br />
-      <input
-        type="text"
-        name="edited[description]"
-        placeholder="description"
-        value="<%= data.description %>"
-        required
-      /><br />
-      <input
-        type="text"
-        name="edited[image]"
-        placeholder="image link"
-        value="<%= data.image %>"
-      /><br />
-      <input
-        type="number"
-        name="edited[price]"
-        placeholder="price"
-        value="<%= data.price %>"
-        required
-      /><br />
-      <input
-        type="text"
-        name="edited[location]"
-        placeholder="location"
-        value="<%= data.location %>"
-        required
-      /><br />
-      <input
-        type="text"
-        name="edited[country]"
-        placeholder="country"
-        value="<%= data.country %>"
-        required
-      /><br />
-      <button>Save</button>
+      <div class="edit-listing-form-pair">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="data[title]"
+          placeholder="Add a catchy title"
+          value="<%= data.title %>"
+        />
+        <div class="warning">Enter a valid title</div>
+      </div>
+      <div class="edit-listing-form-pair">
+        <label for="description">Description</label>
+        <textarea type="text" id="description" name="data[description]">
+<%= data.description %></textarea
+        >
+        <div class="warning">Description cannot be empty</div>
+      </div>
+      <div class="edit-listing-form-pair">
+        <label for="image">Image</label>
+        <input
+          type="text"
+          id="image"
+          name="data[image]"
+          placeholder="Enter image URL/Link"
+          value="<%= data.image %>"
+        />
+        <div class="warning">
+          Adding some image might get more users attention
+        </div>
+      </div>
+      <div class="edit-listing-form-collapse">
+        <div class="edit-listing-form-pair">
+          <label for="price">Price</label>
+          <input
+            type="number"
+            id="price"
+            name="data[price]"
+            placeholder="Price goes here"
+            value="<%= data.price %>"
+          />
+          <div class="warning">Price cannot be empty or less than 0</div>
+        </div>
+        <div class="edit-listing-form-pair">
+          <label for="location">Location</label>
+          <input
+            type="text"
+            id="location"
+            name="data[location]"
+            placeholder="Enter your location"
+            value="<%= data.location %>"
+          />
+          <div class="warning">Location is must to add</div>
+        </div>
+      </div>
+      <div class="edit-listing-form-pair">
+        <label for="country">Country</label>
+        <input
+          type="text"
+          id="country"
+          name="data[country]"
+          placeholder="Country goes here"
+          value="<%= data.country %>"
+        />
+        <div class="warning">Enter country before proceeding</div>
+      </div>
+      <br />
+      <button>Submit</button>
     </form>
-  </body>
-</html>
+    <script src="/js/formRequired.js"></script>
+  </div>
+</div>

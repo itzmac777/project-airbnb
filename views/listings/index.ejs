@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AirBnb</title>
-  </head>
-  <body>
-    <a href="/listings/new">Create</a><br /><br />
-    <% for(listing of data){ %>
-    <a href="/listings/<%= listing.id %>"><%= listing.title %></a>
-    <br />
-    <% } %>
-  </body>
-</html>
+<% layout("layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/css/index.css" />
+
+<div class="card-container">
+  <% for(let card of data){ %>
+  <a href="/listings/<%= card['_id'] %>">
+    <div class="card">
+      <div class="card-image">
+        <img src="<%= card.image %>" alt="" />
+      </div>
+      <div class="card-info">
+        <div class="card-info-title"><%= card.title %></div>
+        <div class="card-info-description"><%= card.description %></div>
+        <div class="card-info-price">&#2547;<%= card.price %></div>
+      </div>
+    </div>
+  </a>
+  <% } %>
+</div>

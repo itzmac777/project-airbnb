@@ -1,44 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AirBnb</title>
-  </head>
-  <body>
-    <form method="POST" action="/listings">
-      <input
-        type="text"
-        name="listing[title]"
-        placeholder="title"
-        required
-      /><br />
-      <input
-        type="text"
-        name="listing[description]"
-        placeholder="description"
-        required
-      /><br />
-      <input type="text" name="listing[image]" placeholder="image link" /><br />
-      <input
-        type="number"
-        name="listing[price]"
-        placeholder="price"
-        required
-      /><br />
-      <input
-        type="text"
-        name="listing[location]"
-        placeholder="location"
-        required
-      /><br />
-      <input
-        type="text"
-        name="listing[country]"
-        placeholder="country"
-        required
-      /><br />
+<% layout("layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/css/create.css" />
+<div class="new-listing">
+  <div class="large-middle-text">Airbnb it.</div>
+  <div class="large-middle-text-black">List yours one</div>
+  <div class="new-listing-form">
+    <form method="post" action="/listings">
+      <div class="new-listing-form-pair">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="listing[title]"
+          placeholder="Add a catchy title"
+        />
+        <div class="warning">Enter a valid title</div>
+      </div>
+      <div class="new-listing-form-pair">
+        <label for="description">Description</label>
+        <textarea
+          type="text"
+          id="description"
+          name="listing[description]"
+        ></textarea>
+        <div class="warning">Description cannot be empty</div>
+      </div>
+      <div class="new-listing-form-pair">
+        <label for="image">Image</label>
+        <input
+          type="text"
+          id="image"
+          name="listing[image]"
+          placeholder="Enter image URL/Link"
+        />
+        <div class="warning">
+          Adding some image might get more users attention
+        </div>
+      </div>
+      <div class="new-listing-form-collapse">
+        <div class="new-listing-form-pair">
+          <label for="price">Price</label>
+          <input
+            type="number"
+            id="price"
+            name="listing[price]"
+            placeholder="Price goes here"
+          />
+          <div class="warning">Price cannot be empty or less than 0</div>
+        </div>
+        <div class="new-listing-form-pair">
+          <label for="location">Location</label>
+          <input
+            type="text"
+            id="location"
+            name="listing[location]"
+            placeholder="Enter your location"
+          />
+          <div class="warning">Location is must to add</div>
+        </div>
+      </div>
+      <div class="new-listing-form-pair">
+        <label for="country">Country</label>
+        <input
+          type="text"
+          id="country"
+          name="listing[country]"
+          placeholder="Country goes here"
+        />
+        <div class="warning">Enter country before proceeding</div>
+      </div>
+      <br />
       <button>Create</button>
     </form>
-  </body>
-</html>
+    <script src="/js/formRequired.js"></script>
+  </div>
+</div>
