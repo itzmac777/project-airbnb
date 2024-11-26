@@ -10,6 +10,7 @@ const listingSchema = new Scehma({
   },
   description: {
     type: "String",
+    required: true,
   },
   image: {
     type: "String",
@@ -22,12 +23,15 @@ const listingSchema = new Scehma({
   },
   price: {
     type: "Number",
+    required: true,
   },
   location: {
     type: "String",
+    required: true,
   },
   country: {
     type: "String",
+    required: true,
   },
 });
 

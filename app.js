@@ -27,6 +27,7 @@ const methodOverride = require("method-override");
 
 // ==== LOCAL MODULES ====
 const Listing = require("./models/listing.js");
+const ExpressError = require("./utils/ExpressError.js");
 
 // ==== MIDDLEWARES ====
 app.set("view engine", "ejs");
@@ -43,80 +44,86 @@ app.get("/", (req, res) => {
 });
 
 // INDEX ROUTE
-app.get("/listings", (req, res) => {
+app.get("/listings", (req, res, next) => {
   Listing.find()
     .then((data) => {
       res.render("listings/index.ejs", { data });
     })
     .catch((err) => {
-      res.send(err);
+      next(new ExpressError(404, "Not Found"));
     });
 });
 
 //CREATE ROUTE
-app.get("/listings/new", (req, res) => {
+app.get("/listings/new", (req, res, next) => {
   res.render("listings/create.ejs");
 });
 
-app.post("/listings", (req, res) => {
+app.post("/listings", (req, res, next) => {
   const { listing } = req.body;
-  if (listing) {
-    Listing.insertMany([listing])
-      .then((data) => {
-        res.redirect("/listings");
-      })
-      .catch((err) => {
-        console.log("Some error occured, input valid data");
-      });
-  }
+  Listing.insertMany([listing])
+    .then((data) => {
+      res.redirect("/listings");
+    })
+    .catch((err) => {
+      next(new ExpressError(400, "Some error occured, input valid data"));
+    });
 });
 
 //READ ROUTE
-app.get("/listings/:id", (req, res) => {
+app.get("/listings/:id", (req, res, next) => {
   const { id } = req.params;
   Listing.findById(id)
     .then((data) => {
       res.render("listings/show.ejs", { data });
     })
     .catch((err) => {
-      console.log("Data not found");
+      next(new ExpressError(404, "Not Found"));
     });
 });
 
 //UPDATE ROUTE
-app.get("/listings/:id/edit", (req, res) => {
+app.get("/listings/:id/edit", (req, res, next) => {
   const { id } = req.params;
   Listing.findById(id)
     .then((data) => {
       res.render("listings/edit.ejs", { data });
     })
     .catch((err) => {
-      console.log("Data not found");
+      next(new ExpressError(404, "Not Found"));
     });
 });
 
-app.patch("/listings/:id", (req, res) => {
+app.patch("/listings/:id", (req, res, next) => {
   const { id } = req.params;
   const { data } = req.body;
-  if (data) {
-    Listing.findByIdAndUpdate(id, data)
-      .then((data) => {
-        res.redirect(`/listings/${id}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  Listing.findByIdAndUpdate(id, data)
+    .then((data) => {
+      res.redirect(`/listings/${id}`);
+    })
+    .catch((err) => {
+      next(new ExpressError(400, "Some error occured, input valid data"));
+    });
 });
 
 //DELETE ROUTE
-app.delete("/listings/:id", (req, res) => {
+app.delete("/listings/:id", (req, res, next) => {
   const { id } = req.params;
   Listing.findByIdAndDelete(id)
     .then((data) => {
       res.redirect("/listings");
     })
     .catch((err) => {
-      console.log(err);
+      next(new ExpressError(404, "Not Found"));
     });
+});
+
+//ERROR HANDLING MIDDLEWARE
+app.all("*", (req, res, next) => {
+  next(new ExpressError(404, "Page Not Found"));
+});
+
+app.use((err, req, res, next) => {
+  const { status = 400, message = "Bad request" } = err;
+  res.status(status).render("listings/error.ejs", { status, message });
 });

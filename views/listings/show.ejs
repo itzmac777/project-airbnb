@@ -1,21 +1,28 @@
 <% layout("layouts/boilerplate.ejs") %>
 <link rel="stylesheet" href="/css/show.css" />
 <div class="show-card-container">
+  <% if(data.title){ %>
   <div class="show-card-container-title"><%= data.title %></div>
+  <% } %>
   <div class="show-card-container-image">
     <img src="<%= data.image %>" alt="" />
   </div>
   <div class="show-card-container-info">
     <div class="show-card-container-info-desc">
+      <% if(data.description){ %>
       <div class="show-card-container-desc"><%= data.description %></div>
+      <% } %> <% if(data.location && data.country){ %>
       <div class="show-card-container-location">
         <%= data.location %> <%= data.country %>
       </div>
+      <% } %>
     </div>
     <div class="show-card-container-info-card">
+      <% if(data.price){ %>
       <div class="show-card-container-info-price">
         &#2547;<%= data.price.toLocaleString("en-BD") %> / Night
       </div>
+      <% } %>
       <div class="book-btn">Book Now</div>
     </div>
   </div>

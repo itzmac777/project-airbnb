@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   padding: 2.5em;
   gap: 1.5rem;
-  row-gap: 2em;
+  row-gap: 3em;
   justify-content: center;
 }
 
@@ -19,9 +19,16 @@
   cursor: pointer;
 }
 
+.card:hover .card-image {
+  /* min-height: 16.5rem;
+  max-width: 17rem; */
+  transform: translateY(-0.5rem);
+}
+
 .card-image {
   min-height: 16rem;
   max-width: 16.5rem;
+  transition: 0.3s all ease-in-out;
 }
 
 .card-image img {
@@ -33,27 +40,32 @@
 
 .card-info {
   padding-top: 0.2em;
-  font-size: 98%;
-  color: rgba(0, 0, 0, 0.795);
+  font-size: 100%;
+  color: hsla(0, 0%, 20%);
 }
 
 .card-info-title {
   font-weight: 600;
   margin-top: 0.4em;
+  margin-bottom: 0.2em;
   padding: 0.025em 0.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-info-description {
   padding: 0.025em 0.1em;
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.596);
+  font-size: 95%;
+  color: hsla(0, 0%, 50%);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .card-info-price {
-  font-weight: 600;
   padding: 0.25em 0.1em;
-  font-size: 95%;
+  font-weight: bold;
+  font-size: 90%;
 }

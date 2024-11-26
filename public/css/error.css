@@ -1,0 +1,19 @@
+.error-div {
+  display: flex;
+  margin: 3rem;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 65vh;
+}
+
+.error-code {
+  font-size: 3rem;
+  color: #ff385c;
+  font-weight: bold;
+}
+
+.error-message {
+  color: rgba(0, 0, 0, 0.61);
+  font-size: 1rem;
+}
