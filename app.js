@@ -27,6 +27,7 @@ const methodOverride = require("method-override");
 
 // ==== LOCAL MODULES ====
 const Listing = require("./models/listing.js");
+const Review = require("./models/review.js");
 const ExpressError = require("./utils/ExpressError.js");
 
 // ==== MIDDLEWARES ====
@@ -71,15 +72,21 @@ app.post("/listings", (req, res, next) => {
 });
 
 //READ ROUTE
-app.get("/listings/:id", (req, res, next) => {
-  const { id } = req.params;
-  Listing.findById(id)
-    .then((data) => {
-      res.render("listings/show.ejs", { data });
-    })
-    .catch((err) => {
-      next(new ExpressError(404, "Not Found"));
-    });
+app.get("/listings/:id", async (req, res, next) => {
+  // Listing.findById(id)
+  //   .then((data) => {
+  //     res.render("listings/show.ejs", { data });
+  //   })
+  //   .catch((err) => {
+  //     next(new ExpressError(404, "Not Found"));
+  //   });
+  try {
+    const { id } = req.params;
+    const data = await Listing.findById(id).populate("reviews");
+    res.render("listings/show.ejs", { data });
+  } catch (err) {
+    next(new ExpressError(404, "Not Found"));
+  }
 });
 
 //UPDATE ROUTE
@@ -118,7 +125,42 @@ app.delete("/listings/:id", (req, res, next) => {
     });
 });
 
-//ERROR HANDLING MIDDLEWARE
+// ==== LISTING-REVIEWS ROUTES ====
+
+//REVIEWS - CREATE ROUTE
+app.post("/listings/:id/reviews", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { review } = req.body;
+    let listing = await Listing.findById(id);
+    review.createdAt = Date.now();
+    let newReview = new Review(review);
+    await listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+    res.redirect(`/listings/${id}`);
+  } catch (err) {
+    next(new ExpressError(400, "Please enter valid data"));
+  }
+});
+
+//REVIEWS - DELETE ROUTE
+
+app.delete("/listings/:id/reviews", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { listingId } = req.body;
+    await Listing.findByIdAndUpdate(listingId, {
+      $pull: { reviews: id },
+    });
+    await Review.findByIdAndDelete(id);
+    res.redirect(`/listings/${listingId}`);
+  } catch (err) {
+    next(new ExpressError(400, "Review was not found"));
+  }
+});
+
+// === ERROR HANDLING MIDDLEWARE ===
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
 });

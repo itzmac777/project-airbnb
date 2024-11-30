@@ -113,3 +113,170 @@
   display: flex;
   justify-content: space-between;
 }
+
+.review-container {
+  display: flex;
+  margin-top: 3rem;
+  align-items: left;
+  flex-direction: column;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.left-text-black {
+  font-size: 2rem;
+  font-weight: 600;
+  color: hsl(0, 0%, 50%);
+  margin-bottom: 2rem;
+}
+
+.review-form input,
+.review-form textarea {
+  width: 20vw;
+  height: 5em;
+  background-color: white;
+  border: 1.5px solid rgb(204, 203, 203);
+  padding: 0.7em 1em;
+  border-radius: 0.5em;
+  margin-bottom: 0.5rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.review-form textarea {
+  resize: none;
+}
+
+.review-form-pair {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.4em;
+  margin-bottom: 0.5em;
+}
+
+.review-form-pair label {
+  letter-spacing: 0.2em;
+}
+
+.review-form input::placeholder,
+.review-form textarea::placeholder {
+  color: #22222285;
+}
+
+.review-form button {
+  background-color: #ff385c;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.warning {
+  font-size: 0.9em;
+  font-weight: 500;
+  color: #ff385dbe;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  bottom: 0.5em;
+  display: none;
+}
+
+.rating-selection {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+}
+
+.rating-selection-input-label label {
+  color: hsl(0, 0%, 50%);
+  width: 2rem;
+  background-color: white;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  transition: 0.3s all ease-in-out;
+  box-shadow: 0em 0.4em 2em rgba(204, 203, 203, 0.747);
+}
+
+.rating-selection-input-label input {
+  display: none;
+}
+
+.rating-selection-input-label input:checked + label {
+  background-color: #ff385d;
+  border: none;
+  color: white;
+}
+
+.rating-selection-input-label label {
+  display: flex;
+}
+
+.reviews-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  justify-content: space-between;
+  margin: 2rem 0 3rem 0;
+}
+
+.reviews-view-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 45%;
+}
+
+.review-username {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.reviews-view-container-rating {
+  display: flex;
+}
+
+.reviews-view-container-rating i {
+  font-size: 0.5rem;
+  align-self: flex-start;
+  justify-self: flex-start;
+}
+
+.reviews-view-container-rating-time {
+  display: flex;
+  font-size: 0.9rem;
+}
+
+.reviews-view-container-comment {
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin-top: 0.3rem;
+}
+
+.left-review-text-black {
+  margin: 5rem 0 3rem 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: hsl(0, 0%, 50%);
+}
+
+.delete-update-btn {
+  margin-top: 1rem;
+}
+
+#review-delete-btn {
+  font-size: 0.6rem;
+  transition: 0.3s all ease-in-out;
+  border: 0.5px solid #ff385d;
+}
+
+#review-delete-btn:hover {
+  background-color: white;
+  color: #22222285;
+  border: 0.5px solid rgba(0, 0, 0, 0.404);
+}

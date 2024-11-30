@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const model = mongoose.model;
+const Review = require("./review.js");
 
 // ==== SCHEMAS ====
-const Scehma = mongoose.Schema;
-const model = mongoose.model;
-const listingSchema = new Scehma({
+const listingSchema = new Schema({
   title: {
     type: "String",
     required: true,
@@ -33,6 +34,22 @@ const listingSchema = new Scehma({
     type: "String",
     required: true,
   },
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
+});
+
+listingSchema.post("findOneAndDelete", async (data) => {
+  try {
+    if (data.reviews.length) {
+      await Review.deleteMany({ _id: { $in: data.reviews } });
+    }
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 const Listing = model("Listing", listingSchema);
