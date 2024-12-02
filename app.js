@@ -24,11 +24,15 @@ const path = require("path");
 const ejs = require("ejs");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 // ==== LOCAL MODULES ====
 const Listing = require("./models/listing.js");
 const Review = require("./models/review.js");
 const ExpressError = require("./utils/ExpressError.js");
+const listing = require("./routes/listing.js");
+const review = require("./routes/review.js");
 
 // ==== MIDDLEWARES ====
 app.set("view engine", "ejs");
@@ -38,127 +42,32 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
+app.use(
+  session({
+    secret: "airbnbv2",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      httpOnly: true,
+    },
+  })
+);
+app.use(flash());
 
-// ==== LISTING ROUTES ====
-app.get("/", (req, res) => {
-  res.send("This is root");
+// ==== ACQUIRING FLASH IF EXISTS ====
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.failure = req.flash("failure");
+  next();
 });
 
-// INDEX ROUTE
-app.get("/listings", (req, res, next) => {
-  Listing.find()
-    .then((data) => {
-      res.render("listings/index.ejs", { data });
-    })
-    .catch((err) => {
-      next(new ExpressError(404, "Not Found"));
-    });
-});
+// ==== LISTING ROUTE ====
+app.use("/listings", listing);
 
-//CREATE ROUTE
-app.get("/listings/new", (req, res, next) => {
-  res.render("listings/create.ejs");
-});
-
-app.post("/listings", (req, res, next) => {
-  const { listing } = req.body;
-  Listing.insertMany([listing])
-    .then((data) => {
-      res.redirect("/listings");
-    })
-    .catch((err) => {
-      next(new ExpressError(400, "Some error occured, input valid data"));
-    });
-});
-
-//READ ROUTE
-app.get("/listings/:id", async (req, res, next) => {
-  // Listing.findById(id)
-  //   .then((data) => {
-  //     res.render("listings/show.ejs", { data });
-  //   })
-  //   .catch((err) => {
-  //     next(new ExpressError(404, "Not Found"));
-  //   });
-  try {
-    const { id } = req.params;
-    const data = await Listing.findById(id).populate("reviews");
-    res.render("listings/show.ejs", { data });
-  } catch (err) {
-    next(new ExpressError(404, "Not Found"));
-  }
-});
-
-//UPDATE ROUTE
-app.get("/listings/:id/edit", (req, res, next) => {
-  const { id } = req.params;
-  Listing.findById(id)
-    .then((data) => {
-      res.render("listings/edit.ejs", { data });
-    })
-    .catch((err) => {
-      next(new ExpressError(404, "Not Found"));
-    });
-});
-
-app.patch("/listings/:id", (req, res, next) => {
-  const { id } = req.params;
-  const { data } = req.body;
-  Listing.findByIdAndUpdate(id, data)
-    .then((data) => {
-      res.redirect(`/listings/${id}`);
-    })
-    .catch((err) => {
-      next(new ExpressError(400, "Some error occured, input valid data"));
-    });
-});
-
-//DELETE ROUTE
-app.delete("/listings/:id", (req, res, next) => {
-  const { id } = req.params;
-  Listing.findByIdAndDelete(id)
-    .then((data) => {
-      res.redirect("/listings");
-    })
-    .catch((err) => {
-      next(new ExpressError(404, "Not Found"));
-    });
-});
-
-// ==== LISTING-REVIEWS ROUTES ====
-
-//REVIEWS - CREATE ROUTE
-app.post("/listings/:id/reviews", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const { review } = req.body;
-    let listing = await Listing.findById(id);
-    review.createdAt = Date.now();
-    let newReview = new Review(review);
-    await listing.reviews.push(newReview);
-    await newReview.save();
-    await listing.save();
-    res.redirect(`/listings/${id}`);
-  } catch (err) {
-    next(new ExpressError(400, "Please enter valid data"));
-  }
-});
-
-//REVIEWS - DELETE ROUTE
-
-app.delete("/listings/:id/reviews", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { listingId } = req.body;
-    await Listing.findByIdAndUpdate(listingId, {
-      $pull: { reviews: id },
-    });
-    await Review.findByIdAndDelete(id);
-    res.redirect(`/listings/${listingId}`);
-  } catch (err) {
-    next(new ExpressError(400, "Review was not found"));
-  }
-});
+// ==== REVIEWS ROUTE ====
+app.use("/listings/:id/reviews", review);
 
 // === ERROR HANDLING MIDDLEWARE ===
 app.all("*", (req, res, next) => {

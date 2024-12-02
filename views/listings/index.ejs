@@ -1,6 +1,5 @@
 <% layout("layouts/boilerplate.ejs") %>
 <link rel="stylesheet" href="/css/index.css" />
-
 <div class="card-container">
   <% for(let card of data){ %>
   <a href="/listings/<%= card['_id'] %>">
