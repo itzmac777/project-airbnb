@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const model = mongoose.model;
+const User = require("./user.js");
 
 const reviewSchema = new Schema({
   comment: { type: String, required: true },
@@ -13,6 +14,10 @@ const reviewSchema = new Schema({
   createdAt: {
     type: Number,
     default: Date.now(),
+  },
+  createdBy: {
+    type: Object,
+    required: true,
   },
 });
 

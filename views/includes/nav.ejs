@@ -38,19 +38,36 @@
         />
       </a>
     </div>
-    <div class="nav-icon-user">
-      <div class="nav-icon-user-toggle">
-        <img
-          src="https://cdn0.iconfinder.com/data/icons/mobile-basic-vol-1/32/Burger_Menu-512.png"
-          alt=""
-        />
+    <div class="nav-icon-user-container">
+      <input
+        type="checkbox"
+        id="nav-icon-user-checkbox"
+        name="nav-icon-user-checkbox"
+      />
+      <div class="nav-icon-user-dropdown">
+        <% if(userExists){ %><span>Hi, <%= userInfo.username %></span>
+        <a href="/auth/user/logout">Logout</a>
+        <% } %> <% if(!userExists){ %>
+        <a href="/auth/user/login">Login</a>
+        <a href="/auth/user/signup">Signup</a>
+        <% } %>
       </div>
-      <div class="nav-icon-user-icon">
-        <img
-          src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/circle-user-512.png"
-          alt=""
-        />
-      </div>
+      <label for="nav-icon-user-checkbox">
+        <div class="nav-icon-user">
+          <div class="nav-icon-user-toggle">
+            <img
+              src="https://cdn0.iconfinder.com/data/icons/mobile-basic-vol-1/32/Burger_Menu-512.png"
+              alt=""
+            />
+          </div>
+          <div class="nav-icon-user-icon">
+            <img
+              src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/circle-user-512.png"
+              alt=""
+            />
+          </div>
+        </div>
+      </label>
     </div>
   </div>
 </div>

@@ -1,0 +1,44 @@
+<% layout("layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/css/signup.css" />
+<div class="sign-up-container">
+  <form method="POST" action="/auth/user/signup">
+    <div class="left-text-black">Sign Up</div>
+    <div class="signup-form-pair">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        name="user[username]"
+        placeholder="macgyver777"
+      />
+      <div class="warning">Username cannot be empty</div>
+    </div>
+    <div class="signup-form-pair">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="user[email]"
+        placeholder="macgyver777@gmail.com"
+      />
+      <div class="warning">Email is a must</div>
+    </div>
+    <div class="signup-form-pair">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="user[password]"
+        placeholder=""
+      />
+      <div class="warning">You can't be forgetting password</div>
+    </div>
+    <br />
+    <button>Sign Up</button>
+    <div class="alternate-text">
+      <div>Already Have an account?</div>
+      <a href="/auth/user/login">Login</a>
+    </div>
+  </form>
+</div>
+<script src="/js/formRequiredSignup.js"></script>

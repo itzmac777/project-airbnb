@@ -1,0 +1,29 @@
+<% layout("layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/css/signup.css" />
+<div class="sign-up-container">
+  <form method="POST" action="/auth/user/login">
+    <div class="left-text-black">Login</div>
+    <div class="signup-form-pair">
+      <label for="username">Username</label>
+      <input
+        type="username"
+        id="username"
+        name="username"
+        placeholder="mac777"
+      />
+      <div class="warning">Enter your username</div>
+    </div>
+    <div class="signup-form-pair">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="" />
+      <div class="warning">You can't be forgetting password</div>
+    </div>
+    <br />
+    <button>Login</button>
+    <div class="alternate-text">
+      <div>Doesn't Have an account?</div>
+      <a href="/auth/user/signup">Sign Up</a>
+    </div>
+  </form>
+</div>
+<script src="/js/formRequiredSignup.js"></script>

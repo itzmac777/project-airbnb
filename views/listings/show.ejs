@@ -26,12 +26,14 @@
       <div class="book-btn">Book Now</div>
     </div>
   </div>
+  <% if(owner){ %>
   <div class="delete-listing-btn">
     <form method="POST" action="/listings/<%= data.id %>?_method=DELETE">
       <button>Delete</button>
     </form>
     <a href="/listings/<%= data.id %>/edit">Edit</a>
   </div>
+  <% } %>
   <div class="review-container">
     <div class="left-text-black">Add a Review</div>
     <div class="review-form">
@@ -122,7 +124,7 @@
       <div class="reviews-grid">
         <% for(let review of data.reviews){ %>
         <div class="reviews-view-container">
-          <div class="review-username">Macgyver</div>
+          <div class="review-username"><%= review.createdBy.username %></div>
           <div class="reviews-view-container-rating-time">
             <div class="reviews-view-container-rating">
               <%= review.rating %>

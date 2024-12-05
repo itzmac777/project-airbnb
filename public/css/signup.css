@@ -1,0 +1,65 @@
+.sign-up-container {
+  padding: 3em 5em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.left-text-black {
+  font-size: 2.7rem;
+  font-weight: 600;
+  color: #ff385c;
+  margin-bottom: 3rem;
+}
+
+.sign-up-container input {
+  width: 30vw;
+  background-color: white;
+  border: 1.5px solid rgb(204, 203, 203);
+  padding: 0.7em 1em;
+  border-radius: 0.5em;
+  margin-bottom: 0.5rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.signup-form-pair {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.4em;
+  margin-bottom: 0.5em;
+}
+
+.signup-form-pair label {
+  letter-spacing: 0.2em;
+}
+
+.signup-form-pair input::placeholder,
+.signup-form-pair textarea::placeholder {
+  color: #22222285;
+}
+
+.sign-up-container button {
+  background-color: #ff385c;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.warning {
+  font-size: 0.9em;
+  font-weight: 500;
+  color: #ff385dbe;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  bottom: 0.5em;
+  display: none;
+}
+
+.alternate-text {
+  margin-top: 1rem;
+}

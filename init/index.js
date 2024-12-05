@@ -16,6 +16,10 @@ main()
 // ==== IMPORTING DATA ====
 const data = require("./data.js");
 
+for (listing of data) {
+  listing.createdBy = "67505ea151ce9dd73ef7a646";
+}
+
 // ==== DATA INITIALIZATION ====
 const initData = async () => {
   await Listing.deleteMany({});
