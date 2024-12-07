@@ -15,14 +15,13 @@ const reviewControllers = require("../components/reviews.js");
 
 // ==== REVIEWS ROUTES ====
 
-//REVIEWS - REDIRECT ROUTE
-router.get("/", reviewControllers.redirect);
-
-//REVIEWS - CREATE ROUTE
-router.post("/", isLoggedIn, reviewControllers.create);
-
-//REVIEWS - DELETE ROUTE
-
-router.delete("/", isLoggedIn, reviewControllers.delete);
+router
+  .route("/")
+  //REDIRECT
+  .get(reviewControllers.redirect)
+  //CREATE
+  .post(isLoggedIn, reviewControllers.create)
+  //DELETE
+  .delete(isLoggedIn, reviewControllers.delete);
 
 module.exports = router;

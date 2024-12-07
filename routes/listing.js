@@ -15,23 +15,26 @@ const listingControllers = require("../components/listings.js");
 
 // ==== LISTING ROUTES ====
 
-// INDEX ROUTE
-router.get("/", listingControllers.index);
+router
+  .route("/")
+  //RENDER
+  .get(listingControllers.index)
+  //CREATE
+  .post(isLoggedIn, listingControllers.create);
 
-//CREATE ROUTE
+//RENDER CREATE FORM
 router.get("/new", isLoggedIn, listingControllers.renderCreate);
 
-router.post("/", isLoggedIn, listingControllers.create);
+router
+  .route("/:id")
+  //READ
+  .get(listingControllers.read)
+  //UPDATE
+  .patch(isLoggedIn, listingControllers.update)
+  //DELETE
+  .delete(isLoggedIn, listingControllers.delete);
 
-//READ ROUTE
-router.get("/:id", listingControllers.read);
-
-//UPDATE ROUTE
+//RENDER UPDATE FORM
 router.get("/:id/edit", isLoggedIn, listingControllers.renderUpdate);
-
-router.patch("/:id", isLoggedIn, listingControllers.update);
-
-//DELETE ROUTE
-router.delete("/:id", isLoggedIn, listingControllers.delete);
 
 module.exports = router;

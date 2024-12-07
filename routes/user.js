@@ -11,18 +11,19 @@ const { saveRedirectUrl } = require("../middleware.js");
 const userControllers = require("../components/user.js");
 
 // ==== SIGN UP ROUTES ====
-router.get("/signup", userControllers.renderSignup);
-
-router.post("/signup", userControllers.signup);
+router
+  .route("/signup")
+  .get(userControllers.renderSignup)
+  .post(userControllers.signup);
 
 // ==== LOGIN ROUTES ====
-router.get("/login", userControllers.renderLogin);
-
-router.post("/login", saveRedirectUrl, userControllers.login);
+router
+  .route("/login")
+  .get(userControllers.renderLogin)
+  .post(saveRedirectUrl, userControllers.login);
 
 // ==== LOGOUT ROUTES ====
 router.get("/", userControllers.renderLogout);
-
 router.get("/logout", userControllers.logout);
 
 module.exports = router;
