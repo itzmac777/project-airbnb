@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV != "prduction") {
+  require("dotenv").config();
+}
+
 // ==== BASIC SERVER SETUP ====
 const express = require("express");
 const app = express();

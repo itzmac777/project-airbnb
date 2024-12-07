@@ -78,6 +78,18 @@
   justify-content: space-between;
 }
 
+.new-listing-form-pair input[type="file"]::file-selector-button {
+  background-color: #ff385c;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.5em 1em;
+  font-size: 0.8rem;
+  border-radius: 0.5em;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+
 @media screen and (min-width: 700px) {
   .new-listing-form-collapse {
     display: grid;

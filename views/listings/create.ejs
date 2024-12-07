@@ -4,7 +4,7 @@
   <div class="large-middle-text">Airbnb it.</div>
   <div class="large-middle-text-black">List yours one</div>
   <div class="new-listing-form">
-    <form method="post" action="/listings">
+    <form method="post" action="/listings" enctype="multipart/form-data">
       <div class="new-listing-form-pair">
         <label for="title">Title</label>
         <input
@@ -26,12 +26,7 @@
       </div>
       <div class="new-listing-form-pair">
         <label for="image">Image</label>
-        <input
-          type="text"
-          id="image"
-          name="listing[image]"
-          placeholder="Enter image URL/Link"
-        />
+        <input type="file" accept="image/*" id="image" name="listing[image]" />
         <div class="warning">
           Adding some image might get more users attention
         </div>

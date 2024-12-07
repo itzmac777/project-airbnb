@@ -18,17 +18,21 @@ module.exports.renderCreate = (req, res, next) => {
   res.render("listings/create.ejs");
 };
 
-module.exports.create = (req, res, next) => {
-  const { listing } = req.body;
-  listing.createdBy = req.user;
-  Listing.insertMany([listing])
-    .then((data) => {
-      req.flash("success", "Listing created successfully");
-      res.redirect("/listings");
-    })
-    .catch((err) => {
-      next(new ExpressError(400, "Some error occured, input valid data"));
-    });
+module.exports.create = async (req, res, next) => {
+  try {
+    const { listing } = req.body;
+    listing.createdBy = req.user;
+    listing.image = {
+      url: await req.file.path,
+      filename: await req.file.filename,
+    };
+    await Listing.insertMany([listing]);
+    req.flash("success", "Listing created successfully");
+    res.redirect("/listings");
+  } catch (err) {
+    console.log(err);
+    next(new ExpressError(400, "Some error occured, input valid data"));
+  }
 };
 
 module.exports.read = async (req, res, next) => {

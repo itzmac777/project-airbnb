@@ -6,6 +6,10 @@ const Listing = require("../models/listing.js");
 const Review = require("../models/review.js");
 const ExpressError = require("../utils/ExpressError.js");
 const passport = require("passport");
+const multer = require("multer");
+const { storage } = require("../cloudConfig.js");
+const { cloudinary } = require("../cloudConfig.js");
+const upload = multer({ storage });
 
 // ==== LOCAL MIDDLEWARES ====
 const { isLoggedIn } = require("../middleware.js");
@@ -20,7 +24,7 @@ router
   //RENDER
   .get(listingControllers.index)
   //CREATE
-  .post(isLoggedIn, listingControllers.create);
+  .post(isLoggedIn, upload.single("listing[image]"), listingControllers.create);
 
 //RENDER CREATE FORM
 router.get("/new", isLoggedIn, listingControllers.renderCreate);
