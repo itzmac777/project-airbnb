@@ -1,4 +1,5 @@
 // ==== LOCAL MODULES ====
+const { cloudinary } = require("../cloudConfig.js");
 const Listing = require("../models/listing.js");
 const Review = require("../models/review.js");
 const ExpressError = require("../utils/ExpressError.js");
@@ -74,26 +75,58 @@ module.exports.renderUpdate = async (req, res, next) => {
 };
 
 module.exports.update = async (req, res, next) => {
-  const { id } = req.params;
-  const { data } = req.body;
-  const listing = await Listing.findById(id);
-  const currUser = req.user["_id"];
-  if (
-    listing.createdBy["_id"].equals(currUser) ||
-    req.user.username == "admin"
-  ) {
-    Listing.findByIdAndUpdate(id, data)
-      .then((data) => {
-        req.flash("success", "Updated successfully");
-        res.redirect(`/listings/${id}`);
-      })
-      .catch((err) => {
-        next(new ExpressError(400, "Some error occured, input valid data"));
-      });
-  } else {
-    req.flash("failure", "You cannot edit this listing");
-    return res.redirect(`/listings/${id}`);
+  try {
+    const { id } = req.params;
+    let listingCheck = await Listing.findById(id);
+    const currUser = req.user["_id"];
+    if (
+      listingCheck.createdBy["_id"].equals(currUser) ||
+      req.user.username == "admin"
+    ) {
+      const { data } = req.body;
+      const newImage = req.file;
+      const existingImage = req.body.filename;
+      let listing = await Listing.findByIdAndUpdate(id, data);
+      if (req.file) {
+        listing.image = {
+          url: await newImage.path,
+          filename: await newImage.filename,
+        };
+        await listing.save();
+        await cloudinary.uploader.upload(newImage.path, {
+          public_id: existingImage,
+          overwrite: true,
+        });
+      }
+      req.flash("success", "Updated successfully");
+      res.redirect(`/listings/${id}`);
+    } else {
+      req.flash("failure", "You cannot edit this listing");
+      return res.redirect(`/listings/${id}`);
+    }
+  } catch (err) {
+    next(new ExpressError(400, "Some error occured, input valid data"));
   }
+  // const { id } = req.params;
+  // const { data } = req.body;
+  // const listing = await Listing.findById(id);
+  // const currUser = req.user["_id"];
+  // if (
+  //   listing.createdBy["_id"].equals(currUser) ||
+  //   req.user.username == "admin"
+  // ) {
+  //   Listing.findByIdAndUpdate(id, data)
+  //     .then((data) => {
+  //       req.flash("success", "Updated successfully");
+  //       res.redirect(`/listings/${id}`);
+  //     })
+  //     .catch((err) => {
+  //       next(new ExpressError(400, "Some error occured, input valid data"));
+  //     });
+  // } else {
+  //   req.flash("failure", "You cannot edit this listing");
+  //   return res.redirect(`/listings/${id}`);
+  // }
 };
 
 module.exports.delete = async (req, res, next) => {

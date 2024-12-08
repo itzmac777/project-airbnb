@@ -34,7 +34,7 @@ router
   //READ
   .get(listingControllers.read)
   //UPDATE
-  .patch(isLoggedIn, listingControllers.update)
+  .patch(isLoggedIn, upload.single("data[image]"), listingControllers.update)
   //DELETE
   .delete(isLoggedIn, listingControllers.delete);
 
